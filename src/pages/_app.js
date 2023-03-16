@@ -13,7 +13,12 @@ const colors = {
   // },
 }
 
-const theme = extendTheme({ colors })
+const config = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
+}
+
+const theme = extendTheme({ config })
 
 export default function App({ Component, pageProps }) {
   return (
