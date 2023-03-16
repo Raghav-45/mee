@@ -11,6 +11,7 @@ import {
   Input,
   Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 import { Logo } from '../../../components/Logo'
 import { OAuthButtonGroup } from '../../../components/OAuthButtonGroup'
@@ -19,6 +20,7 @@ import { useRouter } from 'next/router'
 
 export default function Register() {
   const router = useRouter()
+  const toast = useToast()
   return (
     <Container
       maxW="lg"
@@ -98,7 +100,15 @@ export default function Register() {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button colorScheme='blue'>Register</Button>
+              <Button colorScheme='blue' onClick={() =>
+                toast({
+                  title: 'Account created.',
+                  description: "We've created account for you.",
+                  status: 'success',
+                  duration: 3000,
+                  isClosable: true,
+                })
+              }>Register</Button>
               <HStack>
                 <Divider />
                 <Text fontSize="sm" whiteSpace="nowrap" color="muted">
