@@ -16,9 +16,28 @@ const colors = {
 const config = {
   initialColorMode: 'light',
   useSystemColorMode: false,
+  components: {
+    Button: {
+      variants: {
+        primary: {
+          bg: 'red.400',
+        }
+      },
+    },
+  }
 }
 
-const theme = extendTheme({ config })
+const theme = extendTheme({
+  components: {
+    Button: {
+      variants: {
+        primary: {
+          bg: 'blue.500',
+        }
+      },
+    },
+  }
+})
 
 export default function App({ Component, pageProps }) {
   return (
