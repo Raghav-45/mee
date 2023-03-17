@@ -32,7 +32,6 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
-  // const mounted = useRef(false)
   const mounted = useMounted()
 
   return (
