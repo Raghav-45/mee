@@ -3,21 +3,18 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-const withPWA = require("next-pwa")({
-  register: true,
-  skipWaiting: true,
-  dest: "public",
-  disable:
-    process.env.NODE_ENV === "development"
-    // process.env.NODE_ENV === "preview"
-    // process.env.NODE_ENV === "production"
-  // delete two lines above to enable PWA in production deployment
-});
+const withPWA = require("next-pwa");
 
 module.exports = withPWA({
-  // swcMinify: true,
-  // reactStrictMode: true,
-  eslint: {
-    dirs: ["src"],
-  },
+  // swcMinify: true,reactStrictMode: true,
+  reactStrictMode: true,
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+    disable: process.env.NODE_ENV === "development"
+  }
+  // eslint: {
+  //   dirs: ["src"],
+  // },
 });
