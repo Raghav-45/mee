@@ -1,28 +1,16 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
-
-// const withPWA = require("next-pwa");
-
-// module.exports = withPWA({
-//   // swcMinify: true,reactStrictMode: true,
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
 //   reactStrictMode: true,
-//   pwa: {
-//     dest: "public",
-//     register: true,
-//     skipWaiting: true,
-//     disable: process.env.NODE_ENV === "development"
-//   }
-//   // eslint: {
-//   //   dirs: ["src"],
-//   // },
-// });
+// }
 
-const withPWA = require('next-pwa')({
-  dest: 'public'
-})
+const withPWA = require('next-pwa')
 
 module.exports = withPWA({
-  // next.js config
-})
+  reactStrictMode: true,
+  pwa: {
+    dest:"public",
+    register:true,
+    skipWaiting:true,
+    disable:process.env.NODE_ENV === 'development'
+  }
+});
