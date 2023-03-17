@@ -64,7 +64,7 @@ export default function Register() {
                 md: 'lg',
               }}
             >
-              Log in to your account
+              Create your account
             </Heading>
             <HStack spacing="1" justify="center">
               <Text color="muted">Have an account?</Text>
