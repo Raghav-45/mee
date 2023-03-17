@@ -3,13 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-const withPWA = require('next-pwa')({
-  dest: 'public'
-  disable: process.env.NODE_ENV === 'development',
-  register: true,
-  skipWaiting: true,
-})
+const withPWA = require('next-pwa');
 
 module.exports = withPWA({
-  // next.js configuration
-})
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  // reactStrictMode: true,
+  disable: process.env.NODE_ENV === 'development',
+});
