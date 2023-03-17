@@ -22,6 +22,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import { db } from '../../../utils/init-firebase'
+import useMounted from '../../../hooks/useMounted'
 import { doc, setDoc } from 'firebase/firestore'
 import { updateProfile } from "firebase/auth"
 
@@ -33,14 +34,7 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
-  const mounted = useRef(false)
-
-  useEffect(() => {
-    mounted.current = true
-    return () => {
-      mounted.current = false
-    }
-  }, [])
+  const mounted = useMounted()
 
   return (
     <Container
