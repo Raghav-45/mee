@@ -133,6 +133,7 @@ export default function Register() {
                     duration: 3000,
                     isClosable: true,
                   })
+                  router.replace('/profile')
                 })
                 .catch(error => {
                   console.log(error.message)
@@ -145,7 +146,6 @@ export default function Register() {
                 })
                 .finally(() => {
                   mounted.current && setIsSubmitting(false)
-                  router.replace('/profile')
                 })
             }}
           >

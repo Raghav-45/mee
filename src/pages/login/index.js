@@ -22,6 +22,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import { db } from '../../../utils/init-firebase'
+import useMounted from '../../../hooks/useMounted'
 
 export default function Login() {
   const router = useRouter()
@@ -117,6 +118,7 @@ export default function Login() {
                     duration: 3000,
                     isClosable: true,
                   })
+                  router.replace('/profile')
                   // handleRedirectToOrBack()
                 })
                 .catch(error => {
@@ -130,7 +132,6 @@ export default function Login() {
                 })
                 .finally(() => {
                   mounted.current && setIsSubmitting(false)
-                  router.replace('/profile')
                 })
             }}
           >
