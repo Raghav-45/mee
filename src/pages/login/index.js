@@ -1,4 +1,5 @@
 import {
+  chakra,
   Box,
   Button,
   Checkbox,
@@ -11,14 +12,28 @@ import {
   Input,
   Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 import { Logo } from '../../../components/Logo'
 import { OAuthButtonGroup } from '../../../components/OAuthButtonGroup'
 import { PasswordField } from '../../../components/PasswordField'
 import { useRouter } from 'next/router'
 
+import { useState, useEffect, useRef } from 'react'
+import { useAuth } from '../../../contexts/AuthContext'
+import { db } from '../../../utils/init-firebase'
+
 export default function Login() {
   const router = useRouter()
+  const { login } = useAuth()
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const toast = useToast()
+  // const mounted = useRef(false)
+  const mounted = useMounted()
+
   return (
     <Container
       maxW="lg"
@@ -79,32 +94,73 @@ export default function Login() {
             sm: 'xl',
           }}
         >
-          <Stack spacing="6">
-            <Stack spacing="5">
-              <FormControl>
-                <FormLabel htmlFor="email">Email</FormLabel>
-                <Input id="email" type="email" />
-              </FormControl>
-              <PasswordField />
-            </Stack>
-            <HStack justify="space-between">
-              <Checkbox defaultChecked>Remember me</Checkbox>
-              <Button variant="link" colorScheme="blue" size="sm">
-                Forgot password?
-              </Button>
-            </HStack>
+          <chakra.form
+            onSubmit={async e => {
+              e.preventDefault()
+              if (!email || !password) {
+                toast({
+                  description: 'Credentials not valid.',
+                  status: 'error',
+                  duration: 9000,
+                  isClosable: true,
+                })
+                return
+              }
+              // your login logic here
+              setIsSubmitting(true)
+              login(email, password)
+                .then(res => {
+                  toast({
+                    title: 'Login Success.',
+                    description: "We've just Logged You In.",
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                  })
+                  // handleRedirectToOrBack()
+                })
+                .catch(error => {
+                  console.log(error.message)
+                  toast({
+                    description: error.message,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  })
+                })
+                .finally(() => {
+                  mounted.current && setIsSubmitting(false)
+                  router.replace('/profile')
+                })
+            }}
+          >
             <Stack spacing="6">
-              <Button colorScheme='blue'>Sign in</Button>
-              <HStack>
-                <Divider />
-                <Text fontSize="sm" whiteSpace="nowrap" color="muted">
-                  or continue with
-                </Text>
-                <Divider />
+              <Stack spacing="5">
+                <FormControl>
+                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <Input id="email" type="email" autoComplete='email' value={email} onChange={e => setEmail(e.target.value)} />
+                </FormControl>
+                <PasswordField autoComplete='password' value={password} onChange={e => setPassword(e.target.value)} />
+              </Stack>
+              <HStack justify="space-between">
+                <Checkbox defaultChecked>Remember me</Checkbox>
+                <Button variant="link" colorScheme="blue" size="sm">
+                  Forgot password?
+                </Button>
               </HStack>
-              <OAuthButtonGroup />
+              <Stack spacing="6">
+                <Button type='submit' colorScheme='blue' isLoading={isSubmitting}>Sign in</Button>
+                <HStack>
+                  <Divider />
+                  <Text fontSize="sm" whiteSpace="nowrap" color="muted">
+                    or continue with
+                  </Text>
+                  <Divider />
+                </HStack>
+                <OAuthButtonGroup />
+              </Stack>
             </Stack>
-          </Stack>
+          </chakra.form>
         </Box>
       </Stack>
     </Container>
