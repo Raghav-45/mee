@@ -8,13 +8,15 @@ import {
   useBreakpointValue,
   Spacer,
 } from '@chakra-ui/react'
-import { HiMenuAlt4 } from 'react-icons/hi'
+import { HiMenuAlt4, HiPlus } from 'react-icons/hi'
 import { Logo } from './BigLogo'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 export const Navbar = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true })
   const router = useRouter()
+  const [IsHamburberOpen, setIsHamburberOpen] = useState(false)
   return (
     // <Box as="section" pb={{ base: '12', md: '24' }}>
       <Box as="nav" bg="black" boxShadow="sm">
@@ -33,8 +35,9 @@ export const Navbar = () => {
                 textColor='white'
                 rounded='full'
                 size={'sm'}
+                onClick={() => setIsHamburberOpen(!IsHamburberOpen)}
                 _hover={{ bg: "whiteAlpha.400" }}
-                icon={<HiMenuAlt4 fontSize="1.25rem" />}
+                icon={!IsHamburberOpen ? <HiMenuAlt4 fontSize="1.25rem" /> : <HiPlus fontSize="1.25rem" style={{transform: 'rotate(45deg)'}} />}
                 aria-label="Open Menu"
               />
             </Flex>
