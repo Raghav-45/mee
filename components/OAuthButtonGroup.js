@@ -1,5 +1,5 @@
 import { Button, ButtonGroup, VisuallyHidden } from '@chakra-ui/react'
-import { GitHubIcon, GoogleIcon, TwitterIcon } from './ProviderIcons'
+import { GitHubIcon, GoogleIcon, TwitterIcon, AppleIcon } from './ProviderIcons'
 import { useAuth } from '../contexts/AuthContext'
 
 const providers = [
@@ -8,18 +8,18 @@ const providers = [
     icon: <GoogleIcon boxSize="5" />,
   },
   {
-    name: 'Twitter',
-    icon: <TwitterIcon boxSize="5" />,
+    name: 'Apple',
+    icon: <AppleIcon boxSize="5" />,
   },
   {
-    name: 'GitHub',
-    icon: <GitHubIcon boxSize="5" />,
+    name: 'Twitter',
+    icon: <TwitterIcon boxSize="5" />,
   },
 ]
 
 
 export const OAuthButtonGroup = () => {
-  const { signInWithGoogle, register } = useAuth()
+  const { signInWithGoogle} = useAuth()
   return (
   <ButtonGroup variant="outline" spacing="4" width="full">
     <Button key={'Google'} width="full" onClick={() => signInWithGoogle()} >
@@ -27,14 +27,14 @@ export const OAuthButtonGroup = () => {
       <GoogleIcon boxSize="5" />
     </Button>
 
+    <Button key={'Apple'} width="full">
+      <VisuallyHidden>Sign in with Apple</VisuallyHidden>
+      <AppleIcon boxSize="5" />
+    </Button>
+
     <Button key={'Twitter'} width="full">
       <VisuallyHidden>Sign in with Twitter</VisuallyHidden>
       <TwitterIcon boxSize="5" />
-    </Button>
-
-    <Button key={'GitHub'} width="full">
-      <VisuallyHidden>Sign in with GitHub</VisuallyHidden>
-      <GitHubIcon boxSize="5" />
     </Button>
   </ButtonGroup>
 )}

@@ -24,7 +24,7 @@ import { useAuth } from '../../../contexts/AuthContext'
 import { db } from '../../../utils/init-firebase'
 import useMounted from '../../../hooks/useMounted'
 
-export default function Login() {
+export default function LoginV2() {
   const router = useRouter()
   const { login } = useAuth()
   const [email, setEmail] = useState('')
@@ -33,11 +33,16 @@ export default function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
   const mounted = useMounted()
+  const inputRef = useRef(null)
+
+  useEffect(() => {inputRef.current.focus()}, [])
+  
 
   return (
-    <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
-      <Stack spacing="8">
-        <Stack spacing="6">
+    <Container maxW="lg" py={{ base: '4', md: '24' }} px={{ base: '0', sm: '8' }}>
+      <Stack spacing="2">
+        <Text fontSize='xl' fontWeight={400}>What's your phone number or email?</Text>
+        {/* <Stack spacing="6">
           <Logo color='blue.500' />
           <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
             <Heading size={{ base: 'lg', md: 'lg' }}>
@@ -50,8 +55,10 @@ export default function Login() {
               </Button>
             </HStack>
           </Stack>
-        </Stack>
-        <Box py={{ base: '0', sm: '8' }} px={{ base: '4', sm: '10' }} bg={{ base: 'transparent', sm: 'bg-surface' }} boxShadow={{ base: 'none', sm: 'md' }} borderRadius={{ base: 'none', sm: 'xl' }}>
+        </Stack> */}
+        <Box py={{ base: '0', sm: '8' }}
+          // px={{ base: '4', sm: '10' }}
+          bg={{ base: 'transparent', sm: 'bg-surface' }} boxShadow={{ base: 'none', sm: 'md' }} borderRadius={{ base: 'none', sm: 'xl' }}>
           <chakra.form
             onSubmit={async e => {
               e.preventDefault()
@@ -95,19 +102,19 @@ export default function Login() {
             <Stack spacing="6">
               <Stack spacing="5">
                 <FormControl>
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <Input id="email" type="email" autoComplete='email' value={email} onChange={e => setEmail(e.target.value)} />
+                  {/* <FormLabel htmlFor="email">Email</FormLabel> */}
+                  <Input ref={inputRef} id="email" type="email" autoComplete='email' placeholder='Enter phone number or email' value={email} onChange={e => setEmail(e.target.value)} />
                 </FormControl>
-                <PasswordField autoComplete='password' value={password} onChange={e => setPassword(e.target.value)} />
+                {/* <PasswordField autoComplete='password' value={password} onChange={e => setPassword(e.target.value)} /> */}
               </Stack>
-              <HStack justify="space-between">
+              {/* <HStack justify="space-between">
                 <Checkbox defaultChecked>Remember me</Checkbox>
                 <Button variant="link" colorScheme="blue" size="sm">
                   Forgot password?
                 </Button>
-              </HStack>
+              </HStack> */}
               <Stack spacing="6">
-                <Button type='submit' colorScheme='blue' isLoading={isSubmitting}>Sign in</Button>
+                <Button type='submit' variant='primary' isLoading={isSubmitting}>Continue</Button>
                 <HStack>
                   <Divider />
                   <Text fontSize="sm" whiteSpace="nowrap" color="muted">
@@ -116,6 +123,7 @@ export default function Login() {
                   <Divider />
                 </HStack>
                 <OAuthButtonGroup />
+                <Text color={'#6B6B6B'} fontSize={'sm'} pr={'16px'} >By proceeding, you consent to get calls, WhatsApp or SMS messages, including by automated means, from Uber and its affiliates to the number provided.</Text>
               </Stack>
             </Stack>
           </chakra.form>

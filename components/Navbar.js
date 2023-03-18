@@ -22,7 +22,7 @@ export const Navbar = () => {
       <Box as="nav" bg="black" boxShadow="sm">
         <Container maxW='unset' py={{ base: '3', lg: '3' }}>
           <HStack justify="space-between">
-            <Logo textColor='white' size={'lg'} flex='auto' />
+            <Logo textColor='white' size={'lg'} flex='auto' onClick={() => router.replace('/')} />
             <Flex justify="space-between" flex="1">
               <Spacer />
               <HStack spacing={0.5} align='center'>
