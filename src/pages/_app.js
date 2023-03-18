@@ -4,6 +4,7 @@ import AuthContextProvider from '../../contexts/AuthContext'
 
 // 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react'
+import { Layout } from '../../components/Layout'
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -33,8 +34,13 @@ const theme = extendTheme({
     Button: {
       variants: {
         primary: {
-          bg: 'blue.500',
-        }
+          bg: 'black',
+          textColor: 'white',
+        },
+        secondary: {
+          bg: 'white',
+          textColor: 'black',
+        },
       },
     },
   }
@@ -44,7 +50,9 @@ export default function App({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <AuthContextProvider>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </AuthContextProvider>
     </ChakraProvider>
   )
