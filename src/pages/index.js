@@ -1,11 +1,29 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Text, Center, Box, Input, Button, Stack, VStack, HStack } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Text, Center, Box, Input, Button, Stack, VStack, HStack, InputGroup, InputLeftElement } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 import { AiFillCar } from 'react-icons/ai'
 import { FiPackage } from 'react-icons/fi'
 import { GiCarWheel } from 'react-icons/gi'
 
+import { HiLocationMarker } from 'react-icons/hi'
+import { TbLocationFilled } from 'react-icons/tb'
+import { RiTruckFill } from 'react-icons/ri'
+import { FaTruckLoading } from 'react-icons/fa'
+import { TbTruckLoading } from 'react-icons/tb'
+
 export default function Home() {
+  const toast = useToast()
+
+  function TabChange(index) {
+    index == 2 ? toast({
+      title: 'Info',
+      description: "Sorry, Renting Service is Currently not Avaliable",
+      status: 'warning',
+      duration: 12000,
+      isClosable: true,
+    }) : toast.closeAll()
+  }
   return (
-    <Tabs>
+    <Tabs onChange={(index) => TabChange(index)}>
       <TabList>
         <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }} >
           <Center>
@@ -25,7 +43,7 @@ export default function Home() {
           </Center>
         </Tab>
 
-        <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }}  isDisabled>
+        <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }}>
           <Center>
             <Flex boxSize={'full'} alignItems={'center'} flexDirection='column'>
               <GiCarWheel size={'22'} />
@@ -40,9 +58,14 @@ export default function Home() {
           <Flex direction={'column'}>
             <Text fontSize={'3xl'} as='b'>Request a ride now</Text>
             <Box py={8}>
-              <Input position={'relative'} size={'lg'} border={'none'} variant='filled' placeholder='Enter Pickup Location' />
-              <Input position={'relative'} size={'lg'} my={2} border={'none'} variant='filled' placeholder='Enter Destination' />
-              {/* <Box position='absolute' top={'33px'} bottom={'33px'} width={'1px'} bg={'#000'} _before={{ border: '1px', height: '10px', width: '10px', content: '""', display: 'block', position: 'absolute', bottom: '0px', left: '0px' }} _after={{ border: '1px', height: '10px', width: '10px', content: '""', display: 'block', position: 'absolute', top: '0px', left: '0px' }}></Box> */}
+              <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
+                <InputLeftElement pointerEvents='none' children={<TbLocationFilled color='gray.300' />} />
+                <Input variant='filled' placeholder='Enter Pickup Location' />
+              </InputGroup>
+              <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
+                <InputLeftElement pointerEvents='none' children={<HiLocationMarker color='gray.300' />} />
+                <Input variant='filled' placeholder='Enter Destination' />
+              </InputGroup>
             </Box>
             <VStack spacing={2}>
               <Button width={'full'} variant='primary'>Request now</Button>
@@ -54,9 +77,15 @@ export default function Home() {
           <Flex direction={'column'}>
             <Text fontSize={'3xl'} as='b'>Request a ride now</Text>
             <Box py={8}>
-              <Input position={'relative'} size={'lg'} border={'none'} variant='filled' placeholder='Enter Pickup Location' />
-              <Input position={'relative'} size={'lg'} my={2} border={'none'} variant='filled' placeholder='Enter Destination' />
-              {/* <Box position='absolute' top={'33px'} bottom={'33px'} width={'1px'} bg={'#000'} _before={{ border: '1px', height: '10px', width: '10px', content: '""', display: 'block', position: 'absolute', bottom: '0px', left: '0px' }} _after={{ border: '1px', height: '10px', width: '10px', content: '""', display: 'block', position: 'absolute', top: '0px', left: '0px' }}></Box> */}
+              <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
+                <InputLeftElement pointerEvents='none' children={<FiPackage color='gray.300' />} />
+                <Input variant='filled' placeholder='Enter Pickup Location' />
+              </InputGroup>
+              <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
+                {/* <InputLeftElement pointerEvents='none' children={<FaTruckLoading color='gray.300' style={{'-webkit-transform': 'scaleX(-1)', transform: 'scaleX(-1)'}} />} /> */}
+                <InputLeftElement pointerEvents='none' children={<RiTruckFill color='gray.300' />} />
+                <Input variant='filled' placeholder='Enter Destination' />
+              </InputGroup>
             </Box>
             <VStack spacing={2}>
               <Button width={'full'} variant='primary'>Request now</Button>
@@ -68,9 +97,14 @@ export default function Home() {
           <Flex direction={'column'}>
             <Text fontSize={'3xl'} as='b'>Request a ride now</Text>
             <Box py={8}>
-              <Input position={'relative'} size={'lg'} border={'none'} variant='filled' placeholder='Enter Pickup Location' />
-              <Input position={'relative'} size={'lg'} my={2} border={'none'} variant='filled' placeholder='Enter Destination' />
-              {/* <Box position='absolute' top={'33px'} bottom={'33px'} width={'1px'} bg={'#000'} _before={{ border: '1px', height: '10px', width: '10px', content: '""', display: 'block', position: 'absolute', bottom: '0px', left: '0px' }} _after={{ border: '1px', height: '10px', width: '10px', content: '""', display: 'block', position: 'absolute', top: '0px', left: '0px' }}></Box> */}
+              <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
+                <InputLeftElement pointerEvents='none' children={<TbLocationFilled color='gray.300' />} />
+                <Input variant='filled' placeholder='Enter Pickup Location' />
+              </InputGroup>
+              <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
+                <InputLeftElement pointerEvents='none' children={<HiLocationMarker color='gray.300' />} />
+                <Input variant='filled' placeholder='Enter Destination' />
+              </InputGroup>
             </Box>
             <VStack spacing={2}>
               <Button width={'full'} variant='primary'>Request now</Button>
