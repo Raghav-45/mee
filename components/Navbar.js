@@ -1,9 +1,7 @@
-import { HiMenuAlt4, HiPlus } from 'react-icons/hi'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
-
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-// import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useRouter } from 'next/router'
+import { HiMenuAlt4, HiPlus } from 'react-icons/hi'
+import { Logo } from './Logo'
 
 const navigation = [
   { name: 'Company', href: '#', current: true },
@@ -24,7 +22,7 @@ export const Navbar = () => {
       <div className='flex flex-row h-full w-full pl-6 pr-3 items-center'>
         <ul className='flex flex-none h-full'>
           <li>
-            <img onClick={() => router.replace('/')} class="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+            <Logo onClick={() => router.replace('/')} className='text-white h-full' />
           </li>
         </ul>
 
@@ -39,7 +37,7 @@ export const Navbar = () => {
           </li>
           <li className='h-full'>
             <button onClick={() => setIsHamburberOpen(!IsHamburberOpen)} className='rounded-full text-center align-middle h-full w-full aspect-square max-h-9 text-white'>
-              {!IsHamburberOpen ? <HiMenuAlt4 className='h-5 w-5 m-auto' /> : <HiPlus className='h-5 w-5 m-auto' style={{transform: 'rotate(45deg)'}} />}
+              {!IsHamburberOpen ? <HiMenuAlt4 className='h-5 w-5 m-auto' /> : <HiPlus className='h-5 w-5 m-auto rotate-45' />}
             </button>
           </li>
         </ul>
