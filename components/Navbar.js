@@ -1,49 +1,49 @@
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  HStack,
-  IconButton,
-  useBreakpointValue,
-  Spacer,
-} from '@chakra-ui/react'
 import { HiMenuAlt4, HiPlus } from 'react-icons/hi'
-import { Logo } from './BigLogo'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
+import { Disclosure, Menu, Transition } from '@headlessui/react'
+// import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+
+const navigation = [
+  { name: 'Company', href: '#', current: true },
+  { name: 'Team', href: '#', current: false },
+  { name: 'Projects', href: '#', current: false },
+  { name: 'Calendar', href: '#', current: false },
+]
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
 export const Navbar = () => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true })
   const router = useRouter()
   const [IsHamburberOpen, setIsHamburberOpen] = useState(false)
   return (
-    // <Box as="section" pb={{ base: '12', md: '24' }}>
-      <Box as="nav" bg="black" boxShadow="sm">
-        <Container maxW='unset' py={{ base: '3', lg: '3' }}>
-          <HStack justify="space-between">
-            <Logo textColor='white' size={'lg'} flex='auto' onClick={() => router.replace('/')} />
-            <Flex justify="space-between" flex="1">
-              <Spacer />
-              <HStack spacing={0.5} align='center'>
-                <Button size={'sm'} rounded='full' variant='primary' _hover={{ bg: "whiteAlpha.400" }} onClick={() => router.replace('/login')}>Log in</Button>
-                <Button size={'sm'} rounded='full' variant='secondary' _hover={{ bg: "whiteAlpha.800" }} onClick={() => router.replace('/register')}>Sign up</Button>
-              </HStack>
-              <IconButton
-                ml={0.5}
-                variant="ghost"
-                textColor='white'
-                rounded='full'
-                size={'sm'}
-                onClick={() => setIsHamburberOpen(!IsHamburberOpen)}
-                _hover={{ bg: "whiteAlpha.400" }}
-                icon={!IsHamburberOpen ? <HiMenuAlt4 fontSize="1.25rem" /> : <HiPlus fontSize="1.25rem" style={{transform: 'rotate(45deg)'}} />}
-                aria-label="Open Menu"
-              />
-            </Flex>
-          </HStack>
-        </Container>
-      </Box>
-    // </Box>
+    <div as="nav" className="bg-black h-14 py-3">
+      <div className='flex flex-row h-full w-full pl-6 pr-3 items-center'>
+        <ul className='flex flex-none h-full'>
+          <li>
+            <img onClick={() => router.replace('/')} class="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+          </li>
+        </ul>
+
+        <ul className='flex grow h-full'></ul>
+
+        <ul className='flex h-full text-sm space-x-1'>
+          <li className='h-full'>
+            <button onClick={() => router.replace('/login')} className='rounded-full text-center align-middle h-full px-3 font-medium text-white'>Log in</button>
+          </li>
+          <li className='h-full'>
+            <button onClick={() => router.replace('/register')} className='rounded-full text-center align-middle h-full px-3 font-medium text-black bg-white'>Sign up</button>
+          </li>
+          <li className='h-full'>
+            <button onClick={() => setIsHamburberOpen(!IsHamburberOpen)} className='rounded-full text-center align-middle h-full w-full aspect-square max-h-9 text-white'>
+              {!IsHamburberOpen ? <HiMenuAlt4 className='h-5 w-5 m-auto' /> : <HiPlus className='h-5 w-5 m-auto' style={{transform: 'rotate(45deg)'}} />}
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
   )
 }
