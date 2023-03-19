@@ -46,7 +46,7 @@ export default function Register() {
             <h2 className='text-2xl w-full font-bold'>Create your account</h2>
             <div className='flex flex-row w-full text-center justify-center gap-x-1'>
               <p className='text-gray-800'>Have an account?</p>
-              <a className='text-blue-400 font-semibold' onClick={() => router.replace('/login')}>Sign up</a>
+              <a className='text-blue-400 font-semibold' onClick={() => router.replace('/login')}>Sign in</a>
             </div>
           </div>
         </div>
