@@ -107,10 +107,11 @@ export default function Register() {
                   <label className='text-start block mr-3 mb-2 font-semibold' htmlFor="Email">Email</label>
                   <input className='h-10 w-full block text-md px-4 rounded-md border' id="email" type="email" autoComplete='email' value={email} onChange={e => setEmail(e.target.value)} />
                 </div>
-                <div className='relative w-full'>
+                {/* <div className='relative w-full'>
                   <label className='text-start block mr-3 mb-2 font-semibold' htmlFor="Password">Password</label>
                   <input className='h-10 w-full block text-md px-4 rounded-md border' id="password" type="passsord" autoComplete='password' value={password} onChange={e => setPassword(e.target.value)} />
-                </div>
+                </div> */}
+                <PasswordField value={password} onChange={e => setPassword(e.target.value)} />
               </div>
             </div>
             <div className='flex flex-row h-6 mt-6 justify-between'>
