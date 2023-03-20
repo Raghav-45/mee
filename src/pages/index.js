@@ -9,6 +9,7 @@ import { TbLocationFilled } from 'react-icons/tb'
 import { RiTruckFill } from 'react-icons/ri'
 import { FaTruckLoading } from 'react-icons/fa'
 import { TbTruckLoading } from 'react-icons/tb'
+import { UseMyToast } from '../../components/useToast'
 
 export default function Home() {
   const toast = useToast()
