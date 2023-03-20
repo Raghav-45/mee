@@ -24,15 +24,15 @@ export const OAuthButtonGroup = () => {
     <div className='flex flex-row w-full mt-6 gap-x-4'>
       <button className='flex items-center justify-center h-10 w-full rounded-md border px-4' key={'Google'} onClick={() => signInWithGoogle()}>
         <div className="hidden">Sign in with Google</div>
-        <GoogleIcon className='h-5 w-5' boxSize="5" />
+        <GoogleIcon className='h-5 w-5' />
       </button>
       <button className='flex items-center justify-center h-10 w-full rounded-md border px-4' key={'Apple'} >
         <div className="hidden">Sign in with Google</div>
-        <AppleIcon className='h-5 w-5' boxSize="5" />
+        <AppleIcon className='h-5 w-5' />
       </button>
       <button className='flex items-center justify-center h-10 w-full rounded-md border px-4' key={'Twitter'} >
         <div className="hidden">Sign in with Google</div>
-        <TwitterIcon className='h-5 w-5' boxSize="5" />
+        <TwitterIcon className='h-5 w-5' />
       </button>
     </div>
   // <ButtonGroup variant="outline" spacing="4" width="full">
