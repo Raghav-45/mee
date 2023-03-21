@@ -1,19 +1,3 @@
-import {
-  chakra,
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  Divider,
-  FormControl,
-  FormLabel,
-  Heading,
-  HStack,
-  Input,
-  Stack,
-  Text,
-  useToast,
-} from '@chakra-ui/react'
 import { Logo } from '../../../components/Logo'
 import { OAuthButtonGroup } from '../../../components/OAuthButtonGroup'
 import { PasswordField } from '../../../components/PasswordField'
@@ -26,6 +10,8 @@ import useMounted from '../../../hooks/useMounted'
 import { doc, setDoc } from 'firebase/firestore'
 import { updateProfile } from "firebase/auth"
 
+import { useToast } from '../../../components/Toast'
+
 export default function Register() {
   const router = useRouter()
   const { register } = useAuth()
@@ -34,7 +20,7 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const toast = useToast()
+  const { toast } = useToast()
   const mounted = useMounted()
 
   return (
@@ -55,12 +41,12 @@ export default function Register() {
             onSubmit={async e => {
               e.preventDefault()
               if (!name || !email || !password) {
-                // toast({
-                //   description: 'Credentials not valid.',
-                //   status: 'error',
-                //   duration: 9000,
-                //   isClosable: true,
-                // })
+                toast({
+                  description: 'Credentials not valid.',
+                  status: 'error',
+                  duration: 9000,
+                  isClosable: true,
+                })
                 return
               }
               // your register logic here
@@ -74,23 +60,23 @@ export default function Register() {
                     DisplayName: name,
                     uid: res.user.uid
                   })
-                  // toast({
-                  //   title: 'Account created.',
-                  //   description: "We've created account for you.",
-                  //   status: 'success',
-                  //   duration: 3000,
-                  //   isClosable: true,
-                  // })
+                  toast({
+                    title: 'Account created.',
+                    description: "We've created account for you.",
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                  })
                   router.replace('/profile')
                 })
                 .catch(error => {
                   console.log(error.message)
-                  // toast({
-                  //   description: error.message,
-                  //   status: 'error',
-                  //   duration: 9000,
-                  //   isClosable: true,
-                  // })
+                  toast({
+                    description: error.message,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  })
                 })
                 .finally(() => {
                   mounted.current && setIsSubmitting(false)
