@@ -36,11 +36,11 @@ export const Toast = (props) => {
   return (
     <div ref={ToastRef} id="toast-warning" className={`relative flex items-center w-full max-w-xs p-4 m-0.5 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800`} style={{animation: `fadein 0.5s, fadeout 0.5s ${duration/1000 - 0.25}s`, visibility: showToast ? 'visible' : 'hidden'}} role="alert">
 
-      {status == 'success' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500/80 bg-green-50 rounded-lg dark:bg-orange-700 dark:text-orange-200`}>
+      {status == 'success' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500/80 bg-green-50 rounded-lg dark:bg-green-700 dark:text-green-200`}>
         <SuccessIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
-      {status == 'info' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500/80 bg-blue-50 rounded-lg dark:bg-orange-700 dark:text-orange-200`}>
+      {status == 'info' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500/80 bg-blue-50 rounded-lg dark:bg-blue-700 dark:text-blue-200`}>
         <InfoIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
@@ -48,7 +48,7 @@ export const Toast = (props) => {
         <WarningIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
-      {status == 'error' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500/80 bg-red-50 rounded-lg dark:bg-orange-700 dark:text-orange-200`}>
+      {status == 'error' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500/80 bg-red-50 rounded-lg dark:bg-red-700 dark:text-red-200`}>
         <ErrorIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
