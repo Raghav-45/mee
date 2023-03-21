@@ -1,6 +1,3 @@
-import {
-  useToast,
-} from '@chakra-ui/react'
 import { Logo } from '../../../components/Logo'
 import { OAuthButtonGroup } from '../../../components/OAuthButtonGroup'
 import { PasswordField } from '../../../components/PasswordField'
@@ -9,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import useMounted from '../../../hooks/useMounted'
+import { useToast } from '../../../components/Toast'
 
 export default function Login() {
   const router = useRouter()
@@ -18,7 +16,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const toast = useToast()
+  const { toast } = useToast()
   const mounted = useMounted()
 
   return (
@@ -39,36 +37,36 @@ export default function Login() {
             onSubmit={async e => {
               e.preventDefault()
               if (!email || !password) {
-                // toast({
-                //   description: 'Credentials not valid.',
-                //   status: 'error',
-                //   duration: 9000,
-                //   isClosable: true,
-                // })
+                toast({
+                  description: 'Credentials not valid.',
+                  status: 'error',
+                  duration: 9000,
+                  isClosable: true,
+                })
                 return
               }
               // your login logic here
               setIsSubmitting(true)
               login(email, password)
                 .then(res => {
-                  // toast({
-                  //   title: 'Login Success.',
-                  //   description: "We've just Logged You In.",
-                  //   status: 'success',
-                  //   duration: 3000,
-                  //   isClosable: true,
-                  // })
+                  toast({
+                    title: 'Login Success.',
+                    description: "We've just Logged You In.",
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                  })
                   router.replace('/profile')
                   // handleRedirectToOrBack()
                 })
                 .catch(error => {
                   console.log(error.message)
-                  // toast({
-                  //   description: error.message,
-                  //   status: 'error',
-                  //   duration: 9000,
-                  //   isClosable: true,
-                  // })
+                  toast({
+                    description: error.message,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  })
                 })
                 .finally(() => {
                   mounted.current && setIsSubmitting(false)
