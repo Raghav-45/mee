@@ -41,14 +41,37 @@ export default function LoginV2() {
   
   const { toast } = useToast()
 
-  return (<button onClick={() => toast({
+  return (
+  <>
+  <button onClick={() => toast({
+    title: 'Info',
+    description: "Improve password difficulty.",
+    status: 'success',
+    duration: 3000,
+    isClosable: true,
+  })} className='h-10 justify-center font-semibold text-white rounded-md bg-blue-400 px-4'>Show Success</button>
+  <button onClick={() => toast({
+    title: 'Info',
+    description: "Improve password difficulty.",
+    status: 'info',
+    duration: 3000,
+    isClosable: true,
+  })} className='h-10 justify-center font-semibold text-white rounded-md bg-blue-400 px-4'>Show Info</button>
+  <button onClick={() => toast({
     title: 'Info',
     description: "Improve password difficulty.",
     status: 'warning',
     duration: 3000,
     isClosable: true,
-  })}>r</button>
-
+  })} className='h-10 justify-center font-semibold text-white rounded-md bg-blue-400 px-4'>Show Toast</button>
+  <button onClick={() => toast({
+    title: 'Info',
+    description: "Improve password difficulty.",
+    status: 'error',
+    duration: 8000,
+    isClosable: true,
+  })} className='h-10 justify-center font-semibold text-white rounded-md bg-blue-400 px-4'>Show Error</button>
+</>
     // <Container maxW="lg" py={{ base: '4', md: '24' }} px={{ base: '0', sm: '8' }}>
     //   <Stack spacing="2">
     //     <Text fontSize='xl' fontWeight={400}>What's your phone number or email?</Text>

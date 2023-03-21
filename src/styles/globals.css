@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #toast-warning {
-  visibility: hidden;
+  /* visibility: hidden; */
   /* min-width: 250px; */
   /* margin-left: -125px; */
   /* background-color: #333; */
@@ -14,7 +14,7 @@
   /* position: fixed; */
   z-index: 1;
   /* left: 50%; */
-  bottom: 30px;
+  bottom: 0px;
   font-size: 17px;
 }
 
@@ -38,25 +38,35 @@
   animation: fadeout 0.5s 2.5s;
 } */
 
-@-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;} 
-  to {bottom: 30px; opacity: 1;}
+@keyframes ZeroToFull {
+  from {width: 0%;} 
+  to {width: 100%;}
+}
+
+@keyframes HeightZeroToFull {
+  from {height: 0%;} 
+  to {height: 100%;}
 }
 
 @keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;} 
-  to {bottom: 0; opacity: 0;}
+  from {bottom: -10px; opacity: 0;}
+  to {bottom: 0px; opacity: 1;}
 }
 
 @keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {bottom: 0px; opacity: 1;}
+  to {bottom: -10px; opacity: 0;}
 }
+
+/* @-webkit-keyframes fadein {
+  from {bottom: -25px; opacity: 0;} 
+  to {bottom: 0px; opacity: 1;}
+} */
+
+/* @-webkit-keyframes fadeout {
+  from {bottom: 0px; opacity: 1;} 
+  to {bottom: -25px; opacity: 0;}
+} */
 
 /* :root {
   --max-width: 1100px;
