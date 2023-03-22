@@ -45,7 +45,7 @@
 
 @keyframes HeightZeroToFull {
   from {height: 0%;} 
-  to {height: 100%;}
+  to {height: 64px;}
 }
 
 @keyframes fadein {
