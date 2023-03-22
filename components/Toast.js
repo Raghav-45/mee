@@ -40,15 +40,15 @@ export const Toast = (props) => {
         <SuccessIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
-      {status == 'info' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500/80 bg-blue-50 rounded-lg dark:bg-blue-700 dark:text-blue-200/80`}style={{animation: `HeightFullToZero 0.25s ${duration/1000 - 0.25}s`}}>
+      {status == 'info' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500/80 bg-blue-50 rounded-lg dark:bg-blue-700 dark:text-blue-200/80`}style={{animation: `HeightFullToZero 0.26s ${duration/1000 - 0.25}s`}}>
         <InfoIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
-      {status == 'warning' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500/80 bg-orange-50 rounded-lg dark:bg-orange-700 dark:text-orange-200/80`}style={{animation: `HeightFullToZero 0.25s ${duration/1000 - 0.25}s`}}>
+      {status == 'warning' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500/80 bg-orange-50 rounded-lg dark:bg-orange-700 dark:text-orange-200/80`}style={{animation: `HeightFullToZero 0.26s ${duration/1000 - 0.25}s`}}>
         <WarningIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
-      {status == 'error' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500/80 bg-red-50 rounded-lg dark:bg-red-700 dark:text-red-200/80`} style={{animation: `HeightFullToZero 0.25s ${duration/1000 - 0.25}s`}}>
+      {status == 'error' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500/80 bg-red-50 rounded-lg dark:bg-red-700 dark:text-red-200/80`} style={{animation: `HeightFullToZero 0.26s ${duration/1000 - 0.25}s`}}>
         <ErrorIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
