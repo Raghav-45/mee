@@ -44,8 +44,23 @@
 }
 
 @keyframes HeightZeroToFull {
-  from {height: 0%;} 
-  to {height: 64px;}
+  from {height: 0; padding-top: 0; padding-bottom: 0; margin-top: 0; margin-bottom: 0;} 
+  to {}
+}
+
+@keyframes HeightFullToZero {
+  from {} 
+  to {height: 0;}
+}
+
+@keyframes PaddingFullToZero {
+  from {} 
+  to { padding-top: 0; padding-bottom: 0;}
+}
+
+@keyframes MarginFullToZero {
+  from {} 
+  to { margin-top: 0; margin-bottom: 0;}
 }
 
 @keyframes fadein {
