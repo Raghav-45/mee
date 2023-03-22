@@ -34,27 +34,27 @@ export const Toast = (props) => {
   setTimeout(() => {setShowToast(false); ToastRef?.current?.remove();}, duration)
 
   return (
-    <div ref={ToastRef} id="toast-warning" className={`relative flex items-center w-full max-w-xs p-4 m-0.5 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800`} style={{animation: `fadein 0.5s, fadeout 0.5s ${duration/1000 - 0.25}s`, visibility: showToast ? 'visible' : 'hidden'}} role="alert">
+    <div ref={ToastRef} id="toast-warning" className={`relative flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800`} style={{animation: `fadein 0.5s, fadeout 0.5s ${duration/1000 - 0.25}s, HeightZeroToFull 0.125s, PaddingFullToZero 0.26s ${duration/1000 - 0.25}s`, visibility: showToast ? 'visible' : 'hidden'}} role="alert">
 
-      {status == 'success' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500/80 bg-green-50 rounded-lg dark:bg-green-700 dark:text-green-200/80`}>
+      {status == 'success' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500/80 bg-green-50 rounded-lg dark:bg-green-700 dark:text-green-200/80`} style={{animation: `HeightFullToZero 0.26s ${duration/1000 - 0.25}s`}}>
         <SuccessIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
-      {status == 'info' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500/80 bg-blue-50 rounded-lg dark:bg-blue-700 dark:text-blue-200/80`}>
+      {status == 'info' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500/80 bg-blue-50 rounded-lg dark:bg-blue-700 dark:text-blue-200/80`}style={{animation: `HeightFullToZero 0.25s ${duration/1000 - 0.25}s`}}>
         <InfoIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
-      {status == 'warning' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500/80 bg-orange-50 rounded-lg dark:bg-orange-700 dark:text-orange-200/80`}>
+      {status == 'warning' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500/80 bg-orange-50 rounded-lg dark:bg-orange-700 dark:text-orange-200/80`}style={{animation: `HeightFullToZero 0.25s ${duration/1000 - 0.25}s`}}>
         <WarningIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
-      {status == 'error' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500/80 bg-red-50 rounded-lg dark:bg-red-700 dark:text-red-200/80`}>
+      {status == 'error' && <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500/80 bg-red-50 rounded-lg dark:bg-red-700 dark:text-red-200/80`} style={{animation: `HeightFullToZero 0.25s ${duration/1000 - 0.25}s`}}>
         <ErrorIcon />
         <span className="sr-only">{status} icon</span>
       </div>}
 
-      <div className="ml-3 text-sm font-normal">{description}</div>
-      {isClosable && <button type="button" onClick={() => ToastRef?.current?.remove()} className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-warning" aria-label="Close">
+      <div className="ml-3 text-sm font-normal" style={{animation: `HeightFullToZero 0.25s ${duration/1000 - 0.25}s`}}>{description}</div>
+      {isClosable && <button type="button" onClick={() => ToastRef?.current?.remove()} className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-warning" aria-label="Close" style={{animation: `HeightFullToZero 0.26s ${duration/1000 - 0.25}s, PaddingFullToZero 0.26s ${duration/1000 - 0.25}s`}}>
         <span className="sr-only">Close</span>
         <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
       </button>}
@@ -82,7 +82,7 @@ export default function ToastWrapper({ children }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <ul id='Toast-area' className='flex flex-col fixed mx-auto z-10 bottom-7 w-full items-center'>
+      <ul id='Toast-area' className='flex flex-col fixed mx-auto z-10 bottom-7 w-full items-center gap-1'>
         {toastList.map((elem) => <Toast Details={elem} />)}
       </ul>
     </ToastContext.Provider>
