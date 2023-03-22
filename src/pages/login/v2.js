@@ -68,7 +68,7 @@ export default function LoginV2() {
     title: 'Info',
     description: "Improve password difficulty.",
     status: 'error',
-    duration: 18000,
+    duration: 5000,
     isClosable: true,
   })} className='h-10 justify-center font-semibold text-white rounded-md bg-blue-400 px-4'>Show Error</button>
 </>
