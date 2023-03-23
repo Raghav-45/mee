@@ -75,6 +75,8 @@ export default function ToastWrapper({ children }) {
     setToastList([...toastList, t])
     console.log(toastList)
   }
+  // const closeAll = () => {}
+  
   const value = {
     toast
   }
