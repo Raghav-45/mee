@@ -10,6 +10,8 @@ import { RiTruckFill } from 'react-icons/ri'
 import { FaTruckLoading } from 'react-icons/fa'
 import { TbTruckLoading } from 'react-icons/tb'
 
+import { Toast } from "../../components/Toast";
+
 export default function Home() {
   const toast = useToast()
 
@@ -18,8 +20,9 @@ export default function Home() {
       title: 'Info',
       description: "Sorry, Renting Service is Currently not Avaliable",
       status: 'warning',
-      duration: 12000,
+      duration: 112000,
       isClosable: true,
+      variant:"information",
     }) : toast.closeAll()
   }
   return (

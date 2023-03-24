@@ -43,6 +43,14 @@ const theme = extendTheme({
         },
       },
     },
+    toast: {
+      variants: {
+        information: props => ({
+          color: mode( 'gray.800','white')(props),
+          bg: "red",
+        }),
+      },
+    },
   }
 })
 
