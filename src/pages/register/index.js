@@ -25,6 +25,7 @@ import { db } from '../../../utils/init-firebase'
 import useMounted from '../../../hooks/useMounted'
 import { doc, setDoc } from 'firebase/firestore'
 import { updateProfile } from "firebase/auth"
+import { supabase } from './../../../lib/supabaseClient'
 
 export default function Register() {
   const router = useRouter()
@@ -36,34 +37,83 @@ export default function Register() {
   const toast = useToast()
   const mounted = useMounted()
 
+  const handleRegister = async (e) => {
+    e.preventDefault()
+    if (!name || !email || !password) {
+      toast({
+        description: 'Credentials not valid.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+      return
+    }
+    // your register logic here
+    setIsSubmitting(true)
+
+    const { user, session, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          username: name
+        },
+      },
+    })
+
+    console.log(user)
+
+    // TODO: Add Error Handling
+    toast({
+      title: 'Account created.',
+      description: "We've created account for you.",
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    })
+
+    mounted.current && setIsSubmitting(false)
+
+    // register(email, password)
+    //   .then(async res => {
+    //     await updateProfile(res.user, { displayName: name })
+    //     await setDoc(doc(db, "UserDetails", res.user.uid), {
+    //       Email: res.user.email,
+    //       PhotoURL: res.user.photoURL,
+    //       DisplayName: name,
+    //       uid: res.user.uid
+    //     })
+
+    //     toast({
+    //       title: 'Account created.',
+    //       description: "We've created account for you.",
+    //       status: 'success',
+    //       duration: 3000,
+    //       isClosable: true,
+    //     })
+    //     router.replace('/profile')
+    //   })
+    //   .catch(error => {
+    //     console.log(error.message)
+    //     toast({
+    //       description: error.message,
+    //       status: 'error',
+    //       duration: 9000,
+    //       isClosable: true,
+    //     })
+    //   })
+    //   .finally(() => {
+    //     mounted.current && setIsSubmitting(false)
+    //   })
+  }
+
   return (
-    <Container
-      maxW="lg"
-      py={{
-        base: '12',
-        md: '24',
-      }}
-      px={{
-        base: '0',
-        sm: '8',
-      }}
-    >
+    <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
       <Stack spacing="8">
         <Stack spacing="6">
           <Logo color='blue.500' />
-          <Stack
-            spacing={{
-              base: '2',
-              md: '3',
-            }}
-            textAlign="center"
-          >
-            <Heading
-              size={{
-                base: 'lg',
-                md: 'lg',
-              }}
-            >
+          <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+            <Heading size={{ base: 'lg', md: 'lg' }}>
               Create your account
             </Heading>
             <HStack spacing="1" justify="center">
@@ -74,75 +124,8 @@ export default function Register() {
             </HStack>
           </Stack>
         </Stack>
-        <Box
-          py={{
-            base: '0',
-            sm: '8',
-          }}
-          px={{
-            base: '4',
-            sm: '10',
-          }}
-          bg={{
-            base: 'transparent',
-            sm: 'bg-surface',
-          }}
-          boxShadow={{
-            base: 'none',
-            sm: 'md',
-          }}
-          borderRadius={{
-            base: 'none',
-            sm: 'xl',
-          }}
-        >
-          <chakra.form
-            onSubmit={async e => {
-              e.preventDefault()
-              if (!name || !email || !password) {
-                toast({
-                  description: 'Credentials not valid.',
-                  status: 'error',
-                  duration: 9000,
-                  isClosable: true,
-                })
-                return
-              }
-              // your register logic here
-              setIsSubmitting(true)
-              register(email, password)
-                .then(async res => {
-                  await updateProfile(res.user, { displayName: name })
-                  await setDoc(doc(db, "UserDetails", res.user.uid), {
-                    Email: res.user.email,
-                    PhotoURL: res.user.photoURL,
-                    DisplayName: name,
-                    uid: res.user.uid
-                  })
-
-                  toast({
-                    title: 'Account created.',
-                    description: "We've created account for you.",
-                    status: 'success',
-                    duration: 3000,
-                    isClosable: true,
-                  })
-                  router.replace('/profile')
-                })
-                .catch(error => {
-                  console.log(error.message)
-                  toast({
-                    description: error.message,
-                    status: 'error',
-                    duration: 9000,
-                    isClosable: true,
-                  })
-                })
-                .finally(() => {
-                  mounted.current && setIsSubmitting(false)
-                })
-            }}
-          >
+        <Box py={{ base: '0', sm: '8' }} px={{ base: '4', sm: '10' }} bg={{ base: 'transparent', sm: 'bg-surface' }} boxShadow={{ base: 'none', sm: 'md' }} borderRadius={{ base: 'none', sm: 'xl' }}>
+          <chakra.form onSubmit={handleRegister}>
             <Stack spacing="6">
               <Stack spacing="5">
                 <FormControl>

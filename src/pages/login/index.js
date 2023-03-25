@@ -23,6 +23,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import { db } from '../../../utils/init-firebase'
 import useMounted from '../../../hooks/useMounted'
+import { supabase } from './../../../lib/supabaseClient'
 
 export default function Login() {
   const router = useRouter()
@@ -33,6 +34,64 @@ export default function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
   const mounted = useMounted()
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    if (!email || !password) {
+      toast({
+        description: 'Credentials not valid.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+      return
+    }
+    // your login logic here
+    setIsSubmitting(true)
+
+    const { user, session, error } = await supabase.auth.signIn({
+      email: email,
+      password: password,
+    })
+
+    console.log(user)
+
+    // TODO: Add Error Handling
+    toast({
+      title: 'Login Success.',
+      description: "We've just Logged You In.",
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    })
+
+    mounted.current && setIsSubmitting(false)
+
+    // login(email, password)
+    //   .then(res => {
+    //     toast({
+    //       title: 'Login Success.',
+    //       description: "We've just Logged You In.",
+    //       status: 'success',
+    //       duration: 3000,
+    //       isClosable: true,
+    //     })
+    //     router.replace('/profile')
+    //     // handleRedirectToOrBack()
+    //   })
+    //   .catch(error => {
+    //     console.log(error.message)
+    //     toast({
+    //       description: error.message,
+    //       status: 'error',
+    //       duration: 9000,
+    //       isClosable: true,
+    //     })
+    //   })
+    //   .finally(() => {
+    //     mounted.current && setIsSubmitting(false)
+    //   })
+  }
 
   return (
     <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
@@ -52,46 +111,7 @@ export default function Login() {
           </Stack>
         </Stack>
         <Box py={{ base: '0', sm: '8' }} px={{ base: '4', sm: '10' }} bg={{ base: 'transparent', sm: 'bg-surface' }} boxShadow={{ base: 'none', sm: 'md' }} borderRadius={{ base: 'none', sm: 'xl' }}>
-          <chakra.form
-            onSubmit={async e => {
-              e.preventDefault()
-              if (!email || !password) {
-                toast({
-                  description: 'Credentials not valid.',
-                  status: 'error',
-                  duration: 9000,
-                  isClosable: true,
-                })
-                return
-              }
-              // your login logic here
-              setIsSubmitting(true)
-              login(email, password)
-                .then(res => {
-                  toast({
-                    title: 'Login Success.',
-                    description: "We've just Logged You In.",
-                    status: 'success',
-                    duration: 3000,
-                    isClosable: true,
-                  })
-                  router.replace('/profile')
-                  // handleRedirectToOrBack()
-                })
-                .catch(error => {
-                  console.log(error.message)
-                  toast({
-                    description: error.message,
-                    status: 'error',
-                    duration: 9000,
-                    isClosable: true,
-                  })
-                })
-                .finally(() => {
-                  mounted.current && setIsSubmitting(false)
-                })
-            }}
-          >
+          <chakra.form onSubmit={handleLogin}>
             <Stack spacing="6">
               <Stack spacing="5">
                 <FormControl>
