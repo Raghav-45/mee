@@ -20,14 +20,11 @@ import { PasswordField } from '../../../components/PasswordField'
 import { useRouter } from 'next/router'
 
 import { useState, useEffect, useRef } from 'react'
-import { useAuth } from '../../../contexts/AuthContext'
-import { db } from '../../../utils/init-firebase'
 import useMounted from '../../../hooks/useMounted'
 import { supabase } from './../../../lib/supabaseClient'
 
 export default function Login() {
   const router = useRouter()
-  const { login } = useAuth()
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -49,12 +46,21 @@ export default function Login() {
     // your login logic here
     setIsSubmitting(true)
 
-    const { user, session, error } = await supabase.auth.signIn({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
 
-    console.log(user)
+    if (error) {
+      toast({
+        description: error.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+      mounted.current && setIsSubmitting(false)
+      return
+    }
 
     // TODO: Add Error Handling
     toast({
@@ -64,6 +70,7 @@ export default function Login() {
       duration: 3000,
       isClosable: true,
     })
+    router.replace('/')
 
     mounted.current && setIsSubmitting(false)
 

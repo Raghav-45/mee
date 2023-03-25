@@ -20,16 +20,11 @@ import { PasswordField } from '../../../components/PasswordField'
 import { useRouter } from 'next/router'
 
 import { useState, useEffect, useRef } from 'react'
-import { useAuth } from '../../../contexts/AuthContext'
-import { db } from '../../../utils/init-firebase'
 import useMounted from '../../../hooks/useMounted'
-import { doc, setDoc } from 'firebase/firestore'
-import { updateProfile } from "firebase/auth"
 import { supabase } from './../../../lib/supabaseClient'
 
 export default function Register() {
   const router = useRouter()
-  const { register } = useAuth()
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -51,7 +46,7 @@ export default function Register() {
     // your register logic here
     setIsSubmitting(true)
 
-    const { user, session, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
@@ -61,7 +56,16 @@ export default function Register() {
       },
     })
 
-    console.log(user)
+    if (error) {
+      toast({
+        description: error.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+      mounted.current && setIsSubmitting(false)
+      return
+    }
 
     // TODO: Add Error Handling
     toast({
@@ -71,6 +75,7 @@ export default function Register() {
       duration: 3000,
       isClosable: true,
     })
+    router.replace('/')
 
     mounted.current && setIsSubmitting(false)
 
