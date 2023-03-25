@@ -11,24 +11,50 @@ import { FaTruckLoading } from 'react-icons/fa'
 import { TbTruckLoading } from 'react-icons/tb'
 
 import { Toast } from "../../components/Toast";
+import { supabase } from '../../lib/supabaseClient'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
   const toast = useToast()
 
+  const [pickupLoc, setPickupLoc] = useState('')
+  const [destinationLoc, setDestinationLoc] = useState('')
+
   function TabChange(index) {
-    index == 2 ? toast({
+    toast.closeAll()
+    index == 0 && toast({
+      title: 'Excited!',
+      description: "Riding is now avaliable",
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+      // variant:"information",
+    })
+
+    index == 2 && toast({
       title: 'Info',
-      description: "Sorry, Renting Service is Currently not Avaliable",
+      description: "Sorry, Renting service is currently not avaliable",
       status: 'warning',
       duration: 112000,
       isClosable: true,
       variant:"information",
-    }) : toast.closeAll()
+    })
+  }
+
+  useEffect(() => {
+    TabChange(0)
+  }, [])
+  
+
+  const BookRide = async () => {
+    // console.log('g')
+    const { data, error } = await supabase.from('rides').insert({pickup_loc: pickupLoc, drop_loc: destinationLoc, fare: 10, driver_id: '6e6ba6ad-76aa-4192-8a50-f3c113eb8d6e'}).select()
+    console.log({ data, error })
   }
   return (
-    <Tabs onChange={(index) => TabChange(index)}>
+    <Tabs onChange={(index) => TabChange(index)} defaultIndex={0}>
       <TabList>
-        <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }} >
+        <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }}>
           <Center>
             <Flex boxSize={'full'} alignItems={'center'} flexDirection='column'>
               <AiFillCar size={'22'} />
@@ -37,7 +63,7 @@ export default function Home() {
           </Center>
         </Tab>
 
-        <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }} >
+        <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }}>
           <Center>
             <Flex boxSize={'full'} alignItems={'center'} flexDirection='column'>
               <FiPackage size={'22'} />
@@ -63,15 +89,15 @@ export default function Home() {
             <Box py={8}>
               <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
                 <InputLeftElement pointerEvents='none' children={<TbLocationFilled color='gray.300' />} />
-                <Input variant='filled' placeholder='Enter Pickup Location' />
+                <Input variant='filled' placeholder='Enter Pickup Location' onChange={(e) => {setPickupLoc(e.target.value); generateFare();}} />
               </InputGroup>
               <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
                 <InputLeftElement pointerEvents='none' children={<HiLocationMarker color='gray.300' />} />
-                <Input variant='filled' placeholder='Enter Destination' />
+                <Input variant='filled' placeholder='Enter Destination' onChange={(e) => {setDestinationLoc(e.target.value); generateFare();}} />
               </InputGroup>
             </Box>
             <VStack spacing={2}>
-              <Button width={'full'} variant='primary'>Request now</Button>
+              <Button width={'full'} variant='primary' onClick={BookRide}>Request now</Button>
               <Button width={'full'} variant='secondary'>Schedule for later</Button>
             </VStack>
           </Flex>
