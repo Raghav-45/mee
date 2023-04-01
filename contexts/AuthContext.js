@@ -25,26 +25,6 @@ export default function AuthContextProvider({ children }) {
     return () => {
       listener?.subscription.unsubscribe()
     }
-
-    // const setData = async () => {
-    //   const { data: { session }, error } = await supabase.auth.getSession();
-    //   if (error) throw error;
-    //   setSession(session)
-    //   setCurrentUser(session?.user)
-    //   setLoading(false);
-    // };
-
-    // const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-    //   setSession(session);
-    //   setCurrentUser(session?.user)
-    //   setLoading(false)
-    // });
-
-    // setData();
-
-    // return () => {
-    //   listener?.subscription.unsubscribe();
-    // };
   }, [])
 
   useEffect(() => {
