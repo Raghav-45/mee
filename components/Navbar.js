@@ -12,10 +12,12 @@ import { HiMenuAlt4, HiPlus } from 'react-icons/hi'
 import { Logo } from './BigLogo'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
 
 export const Navbar = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true })
   const router = useRouter()
+  const { currentUser } = useAuth()
   const [IsHamburberOpen, setIsHamburberOpen] = useState(false)
   return (
     // <Box as="section" pb={{ base: '12', md: '24' }}>
@@ -25,7 +27,7 @@ export const Navbar = () => {
             <Logo textColor='white' size={'lg'} flex='auto' onClick={() => router.replace('/')} />
             <Flex justify="space-between" flex="1">
               <Spacer />
-              <HStack spacing={0.5} align='center'>
+              !currentUser && <HStack spacing={0.5} align='center'>
                 <Button size={'sm'} rounded='full' variant='primary' _hover={{ bg: "whiteAlpha.400" }} onClick={() => router.replace('/login')}>Log in</Button>
                 <Button size={'sm'} rounded='full' variant='secondary' _hover={{ bg: "whiteAlpha.800" }} onClick={() => router.replace('/register')}>Sign up</Button>
               </HStack>
