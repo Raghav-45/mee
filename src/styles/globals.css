@@ -4,3 +4,8 @@ div {
  -ms-user-select: none; /* IE 10+ */
  user-select: none; /* Standard syntax */
  }
+
+body {
+   -webkit-touch-callout: none;
+   -webkit-tap-highlight-color: transparent;
+}
