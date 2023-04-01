@@ -27,10 +27,10 @@ export const Navbar = () => {
             <Logo textColor='white' size={'lg'} flex='auto' onClick={() => router.replace('/')} />
             <Flex justify="space-between" flex="1">
               <Spacer />
-              !currentUser && <HStack spacing={0.5} align='center'>
+              {!currentUser && <HStack spacing={0.5} align='center'>
                 <Button size={'sm'} rounded='full' variant='primary' _hover={{ bg: "whiteAlpha.400" }} onClick={() => router.replace('/login')}>Log in</Button>
                 <Button size={'sm'} rounded='full' variant='secondary' _hover={{ bg: "whiteAlpha.800" }} onClick={() => router.replace('/register')}>Sign up</Button>
-              </HStack>
+              </HStack>}
               <IconButton
                 ml={0.5}
                 variant="ghost"
