@@ -12,7 +12,7 @@ import { HiMenuAlt4, HiPlus } from 'react-icons/hi'
 import { Logo } from './BigLogo'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 
 export const Navbar = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true })
