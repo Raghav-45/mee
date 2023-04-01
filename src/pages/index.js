@@ -13,9 +13,11 @@ import { TbTruckLoading } from 'react-icons/tb'
 import { Toast } from "../../components/Toast";
 import { supabase } from '../../lib/supabaseClient'
 import { useEffect, useState } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
 
 export default function Home() {
   const toast = useToast()
+  const { currentUser } = useAuth()
 
   const [pickupLoc, setPickupLoc] = useState('')
   const [destinationLoc, setDestinationLoc] = useState('')
