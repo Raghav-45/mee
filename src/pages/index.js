@@ -23,7 +23,6 @@ export default function Home() {
   const [destinationLoc, setDestinationLoc] = useState('')
 
   function TabChange(index) {
-    toast.closeAll()
     index == 0 && toast({
       title: 'Excited!',
       description: "Riding is now avaliable",
@@ -37,7 +36,7 @@ export default function Home() {
       title: 'Info',
       description: "Sorry, Renting service is currently not avaliable",
       status: 'warning',
-      duration: 112000,
+      duration: 3000,
       isClosable: true,
       variant:"information",
     })
