@@ -55,11 +55,11 @@ export default function Home() {
   }
 
   async function getapi() {
-    const GenerateAccessToken = await fetch('/cats').then(e => e.json());
+    const GenerateAccessToken = await fetch('/cats/api/security/oauth/token?grant_type=client_credentials&client_id=33OkryzDZsJiBNOartRQy6ArnaRNKEvvol1SprASF0mVzzQ9I5PY_evBl-Y3Rg8GNH1lKkJUYIAVdxl-5JlwVg==&client_secret=lrFxI-iSEg9Zr1w004Ky1YtD55ltmgG3xmC72pzgDdq-BpwVRt1qOzsEeQRTUAAYswDDi7_b_tyuDjajMYsPmz57jve9DRgq').then(e => e.json());
     console.log(GenerateAccessToken)
   }
   getapi()
-  
+
   function addMarker() {
     map.addListener('load', function () {
       var from= new mappls.Marker({
