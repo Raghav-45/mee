@@ -70,11 +70,11 @@ export default function Home() {
         icon: "https://maps.mapmyindia.com/images/to.png"
       })
 
-      // mappls.getDistance({
-      //   coordinates: "518NSV;123ZRR",
-      // },function callback (data) {
-      //   console.log("Data",data);
-      // })
+      mappls.getDistance({
+        coordinates: "518NSV;123ZRR",
+      },function callback (data) {
+        console.log("Data",data);
+      })
     })
   }
 
@@ -86,7 +86,7 @@ export default function Home() {
   return (
     <Box>
       <Script src="https://apis.mappls.com/advancedmaps/api/06eb2afcbe49d1fdfe37e89dbe823094/map_sdk?layer=vector&v=3.0" onLoad={() => setIsMapSDKLoaded(true)} />
-      <Script src="https://apis.mappls.com/advancedmaps/api/06eb2afcbe49d1fdfe37e89dbe823094/map_sdk_plugins?v=3.0" onLoad={() => setIsMapPluginLoaded(true)} />
+      <Script src="https://apis.mappls.com/advancedmaps/api/6184180e-dc53-4a44-a7d1-08795a1c70a6/map_sdk_plugins?v=3.0" onLoad={() => setIsMapPluginLoaded(true)} />
       <div id="map"></div>
     </Box>
   )
