@@ -54,6 +54,12 @@ export default function Home() {
     // })
   }
 
+  async function getapi() {
+    const GenerateAccessToken = await fetch('/cats').then(e => e.json());
+    console.log(GenerateAccessToken)
+  }
+  getapi()
+  
   function addMarker() {
     map.addListener('load', function () {
       var from= new mappls.Marker({
