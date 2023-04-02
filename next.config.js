@@ -18,7 +18,7 @@ module.exports = {
     return [
       {
         source: '/cats',
-        destination: 'https://meowfacts.herokuapp.com/' // Proxy to Backend
+        destination: 'https://outpost.mappls.com/' // Proxy to Backend
       }
     ]
   }
