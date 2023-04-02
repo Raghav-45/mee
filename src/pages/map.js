@@ -30,7 +30,7 @@ export default function Home() {
         markers={[
           {
             // position: [18.5314, 73.845],
-            position: [28.659051, 77.113777],
+            position: [28.6575633,77.1120903],
             draggable: true,
             title: "Marker title",
             onClick: e => {
