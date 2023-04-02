@@ -21,7 +21,6 @@ export default function AuthContextProvider({ children }) {
       session != undefined ? setCurrentUser((current) => (current?.id == session?.user.id) ? current : session.user) : setCurrentUser(null)
       // setCurrentUser(session?.user)
     })
-
     return () => {
       listener?.subscription.unsubscribe()
     }

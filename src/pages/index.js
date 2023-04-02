@@ -14,10 +14,12 @@ import { Toast } from "../../components/Toast";
 import { supabase } from '../../lib/supabaseClient'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
+import { useRouter } from 'next/router'
 
 export default function Home() {
   const toast = useToast()
   const { currentUser } = useAuth()
+  const router = useRouter()
 
   const [pickupLoc, setPickupLoc] = useState('')
   const [destinationLoc, setDestinationLoc] = useState('')
@@ -63,7 +65,6 @@ export default function Home() {
             </Flex>
           </Center>
         </Tab>
-
         <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }}>
           <Center>
             <Flex boxSize={'full'} alignItems={'center'} flexDirection='column'>
@@ -72,7 +73,6 @@ export default function Home() {
             </Flex>
           </Center>
         </Tab>
-
         <Tab height={24} width={24} _selected={{ color: 'black', bg: 'blackAlpha.200', borderBottomColor: 'black' }}>
           <Center>
             <Flex boxSize={'full'} alignItems={'center'} flexDirection='column'>
@@ -81,7 +81,6 @@ export default function Home() {
             </Flex>
           </Center>
         </Tab>
-
       </TabList>
       <TabPanels>
         <TabPanel>
@@ -100,6 +99,7 @@ export default function Home() {
             <VStack spacing={2}>
               <Button width={'full'} variant='primary' onClick={BookRide}>Request now</Button>
               <Button width={'full'} variant='secondary'>Schedule for later</Button>
+              <Button size={'sm'} rounded='full' variant='primary' _hover={{ bg: "whiteAlpha.400" }} onClick={() => router.replace('/map')}>Test Our Map</Button>
             </VStack>
           </Flex>
         </TabPanel>
