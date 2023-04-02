@@ -22,17 +22,21 @@ export default function Home() {
 
   const [pickupLoc, setPickupLoc] = useState('')
   const [destinationLoc, setDestinationLoc] = useState('')
+  const MapSettings = {
+    zoomControl: false
+  }
 
   return (
     <Box>
       <Script src="https://apis.mapmyindia.com/advancedmaps/v1/06eb2afcbe49d1fdfe37e89dbe823094/map_load?v=1.3" />
       <Map
+        center={[28.659051, 77.113777]}
+        {...MapSettings}
         markers={[
           {
-            // position: [18.5314, 73.845],
             position: [28.659051, 77.113777],
             draggable: true,
-            title: "Marker title",
+            title: "Pickup",
             onClick: e => {
               console.log("clicked ");
             },
