@@ -21,7 +21,9 @@ import { useAuth } from '../../contexts/AuthContext'
 export default function Home() {
   const toast = useToast()
   const { currentUser } = useAuth()
-  const [isMapLoaded, setIsMapLoaded] = useState(false)
+
+  const [isMapSDKLoaded, setIsMapSDKLoaded] = useState(false)
+  const [isMapPluginLoaded, setIsMapPluginLoaded] = useState(false)
 
   const [pickupLoc, setPickupLoc] = useState('')
   const [destinationLoc, setDestinationLoc] = useState('')
@@ -33,45 +35,59 @@ export default function Home() {
 
   var map
   function initMap() {
-    map = new mappls.Map('map', {center:[28.638698386592438,77.27604556863412]})
+    map = new mappls.Map('map', {center:[28.667936, 77.112228], zoom: 16, search: false})
+
+    // map.addListener('load', function () {
+    //   var from= new mappls.Marker({
+    //     map: map,
+    //     position: {"lat": 28.659051 ,"lng":77.113777},
+    //     fitbounds: true,
+    //     icon: "https://maps.mapmyindia.com/images/from.png"
+    //   })
+      
+    //   var to= new mappls.Marker({
+    //     map: map,
+    //     position: {"lat": 28.667936 ,"lng":77.112228},
+    //     fitbounds: true,
+    //     icon: "https://maps.mapmyindia.com/images/to.png"
+    //   })
+    // })
   }
 
-  // useEffect(() => {
-  //   if (isMapLoaded) {
-  //     const m = new mappls.Map('map', {center:{lat:28.612964,lng:77.229463} })
-  //     setMap(m)
-  //   }
-  // }, [isMapLoaded])
-  
+  function addMarker() {
+    map.addListener('load', function () {
+      var from= new mappls.Marker({
+        map: map,
+        position: {"lat": 28.659051 ,"lng":77.113777},
+        fitbounds: true,
+        icon: "https://maps.mapmyindia.com/images/from.png"
+      })
+      
+      var to= new mappls.Marker({
+        map: map,
+        position: {"lat": 28.667936 ,"lng":77.112228},
+        fitbounds: true,
+        icon: "https://maps.mapmyindia.com/images/to.png"
+      })
+
+      // mappls.getDistance({
+      //   coordinates: "518NSV;123ZRR",
+      // },function callback (data) {
+      //   console.log("Data",data);
+      // })
+    })
+  }
+
+  useEffect(() => {
+    isMapSDKLoaded && initMap()
+    isMapSDKLoaded && isMapPluginLoaded && addMarker()
+  }, [isMapSDKLoaded, isMapPluginLoaded])
 
   return (
     <Box>
-      {/* <Script src="https://apis.mappls.com/advancedmaps/v1/06eb2afcbe49d1fdfe37e89dbe823094/map_load?v=3.0&layer=vector" onLoad={() => setMap(new mappls.Map('map', {center:{lat:28.612964,lng:77.229463} }))} /> */}
-      <Script src="https://apis.mappls.com/advancedmaps/api/06eb2afcbe49d1fdfe37e89dbe823094/map_sdk?layer=vector&v=3.0" onLoad={() => initMap()} />
-      {/* {isMapLoaded && <Map
-        center={[28.659051, 77.113777]}
-        {...MapSettings}
-        markers={[
-          {
-            position: [28.667936, 77.112228],
-            draggable: true,
-            title: "Destination",
-            onClick: e => {console.log("clicked")},
-            onDragend: e => {console.log("dragged")}
-          },
-          {
-            position: [28.659051, 77.113777],
-            draggable: true,
-            title: "Pickup",
-            onClick: e => {console.log("clicked")},
-            onDragend: e => {console.log("dragged")}
-          }
-        ]}
-      />} */}
-
-      {/* <Box id="map" height={'90vh'} width={'100%'}></Box> */}
-
-    <div id="map" style={{margin: 0, padding: 0, width: "100%", height: "100vh",}}></div>
+      <Script src="https://apis.mappls.com/advancedmaps/api/06eb2afcbe49d1fdfe37e89dbe823094/map_sdk?layer=vector&v=3.0" onLoad={() => setIsMapSDKLoaded(true)} />
+      <Script src="https://apis.mappls.com/advancedmaps/api/06eb2afcbe49d1fdfe37e89dbe823094/map_sdk_plugins?v=3.0" onLoad={() => setIsMapPluginLoaded(true)} />
+      <div id="map"></div>
     </Box>
   )
 }
