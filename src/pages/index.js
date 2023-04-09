@@ -47,7 +47,7 @@ export default function Home() {
   }
 
   const registerRide = async () => {
-    const { data, error } = await supabase.from('rides').insert({pickup_loc: pickupLoc, drop_loc: destinationLoc, fare: 10, driver_id: '6e6ba6ad-76aa-4192-8a50-f3c113eb8d6e'}).select().maybeSingle()
+    const { data, error } = await supabase.from('rides').insert({pickup_loc: pickupLoc, drop_loc: destinationLoc, fare: 10, driver_id: '25f3e46e-46d7-47dc-bebf-8ec12d2a4886'}).select().maybeSingle()
     return data
   }
 
