@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import '@/styles/globals.css'
 import AuthContextProvider from '../../contexts/AuthContext'
+import { useRouter } from 'next/router'
 
 // 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react'
@@ -55,12 +56,18 @@ const theme = extendTheme({
 })
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter()
+  const path = router.pathname
   return (
     <ChakraProvider theme={theme}>
       <AuthContextProvider>
-        <Layout>
+        {path != '/modern' ?
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          :
           <Component {...pageProps} />
-        </Layout>
+        }
       </AuthContextProvider>
     </ChakraProvider>
   )
