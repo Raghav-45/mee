@@ -16,14 +16,10 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useRouter } from 'next/router'
 
-import { OnBoarding } from '../../components/OnBoarding'
-
 export default function Home() {
   const toast = useToast()
   const { currentUser } = useAuth()
   const router = useRouter()
-
-  const [showOnBoarding, setShowOnBoarding] = useState(true)
 
   const [pickupLoc, setPickupLoc] = useState('')
   const [destinationLoc, setDestinationLoc] = useState('')
@@ -66,10 +62,9 @@ export default function Home() {
   useEffect(() => {
     myRide && console.log('Got ride', myRide)
   }, [myRide])
+  
 
   return (
-    showOnBoarding ? <OnBoarding onTrynow={() => setShowOnBoarding(false)} />
-    :
     <Box>
       <Tabs onChange={(index) => TabChange(index)} defaultIndex={0}>
         <TabList>
