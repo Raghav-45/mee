@@ -15,7 +15,7 @@ import { Toast } from "../../components/Toast";
 import { supabase } from '../../lib/supabaseClient'
 import { useAuth } from '../../contexts/AuthContext'
 
-import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
+import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 
 export default function Home() {
   const toast = useToast()
@@ -26,6 +26,7 @@ export default function Home() {
   })
 
   const center = { lat: 28.659051, lng: 77.113777 }
+  const mapOptions = {zoomControl: false, streetViewControl: false, mapTypeControl: false, fullscreenControl: false}
 
   const [pickupLoc, setPickupLoc] = useState('')
   const [destinationLoc, setDestinationLoc] = useState('')
@@ -35,10 +36,12 @@ export default function Home() {
   }
 
   return (
-    <Box h={'100%'} w={'100%'}>
-      <GoogleMap center={center} zoom={15} mapContainerStyle={{width: '100%', height: '100%'}}>
-
-      </GoogleMap>
+    <Box position={'relative'} h={'100vh'} w={'100vw'}>
+      <Box position={'absolute'} h={'100%'} w={'100%'}>
+        <GoogleMap center={center} zoom={17} mapContainerStyle={{width: '100%', height: '100%'}} options={mapOptions}>
+          <Marker position={center} />
+        </GoogleMap>
+      </Box>
     </Box>
   )
 }

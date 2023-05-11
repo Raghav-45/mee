@@ -48,7 +48,7 @@ const theme = extendTheme({
       variants: {
         information: props => ({
           color: mode( 'gray.800','white')(props),
-          bg: "red",
+          bg: 'blue',
         }),
       },
     },

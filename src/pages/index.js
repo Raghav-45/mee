@@ -12,10 +12,11 @@ import { TbTruckLoading } from 'react-icons/tb'
 
 import { Toast } from "../../components/Toast";
 import { supabase } from '../../lib/supabaseClient'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useRouter } from 'next/router'
 
+import { useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import { OnBoarding } from '../../components/OnBoarding'
 
 export default function Home() {
@@ -23,12 +24,27 @@ export default function Home() {
   const { currentUser } = useAuth()
   const router = useRouter()
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: 'AIzaSyB0f0o77WzVWMIXX69u0oJL8zyKPKSsAEA',
+    libraries: ['places'],
+  })
+
+  const center = { lat: 28.659051, lng: 77.113777 }
+  const mapOptions = {zoomControl: false, streetViewControl: false, mapTypeControl: false, fullscreenControl: false}
+  const [directionsResponse, setDirectionsResponse] = useState(null)
+  const [distance, setDistance] = useState('')
+  const [duration, setDuration] = useState('')
+
   const [showOnBoarding, setShowOnBoarding] = useState(true)
 
   const [pickupLoc, setPickupLoc] = useState('')
   const [destinationLoc, setDestinationLoc] = useState('')
 
   const [myRide, setMyRide] = useState()
+
+  const originInputRef = useRef()
+  const destinationInputRef = useRef()
+  const [isCalculatingRoute, setIsCalculatingRoute] = useState(false)
 
   function TabChange(index) {
     index == 0 && toast({
@@ -50,13 +66,39 @@ export default function Home() {
     })
   }
 
-  const registerRide = async () => {
-    const { data, error } = await supabase.from('rides').insert({pickup_loc: pickupLoc, drop_loc: destinationLoc, fare: 10, driver_id: '25f3e46e-46d7-47dc-bebf-8ec12d2a4886'}).select().maybeSingle()
+  async function calculateRoute() {
+    if (originInputRef.current.value === '' || destinationInputRef.current.value === '') { return }
+    setIsCalculatingRoute(true)
+    const directionsService = new google.maps.DirectionsService()
+    const results = await directionsService.route({
+      origin: originInputRef.current.value,
+      destination: destinationInputRef.current.value,
+      travelMode: google.maps.TravelMode.DRIVING,
+    })
+    setDirectionsResponse(results)
+
+    console.log(results)
+
+    setDistance(results.routes[0].legs[0].distance.text)
+    setDuration(results.routes[0].legs[0].duration.text)
+    setIsCalculatingRoute(false)
+  }
+
+  function clearRoute() {
+    setDirectionsResponse(null)
+    setDistance('')
+    setDuration('')
+    originInputRef.current.value = ''
+    destinationInputRef.current.value = ''
+  }
+
+  const registerRide = async (startLoc, endLoc) => {
+    const { data, error } = await supabase.from('rides').insert({pickup_loc: startLoc, drop_loc: endLoc, fare: 10, driver_id: '25f3e46e-46d7-47dc-bebf-8ec12d2a4886'}).select().maybeSingle()
     return data
   }
 
-  const BookRide = async () => {
-    registerRide().then((e) => setMyRide(e))
+  const BookRide = async (startLoc, endLoc) => {
+    registerRide(startLoc, endLoc).then((e) => setMyRide(e))
   }
 
   useEffect(() => {
@@ -66,6 +108,10 @@ export default function Home() {
   useEffect(() => {
     myRide && console.log('Got ride', myRide)
   }, [myRide])
+
+  if (!isLoaded) {
+    return <Box>Loading...</Box>
+  }
 
   return (
     showOnBoarding ? <OnBoarding onTrynow={() => setShowOnBoarding(false)} />
@@ -103,20 +149,35 @@ export default function Home() {
             <Flex direction={'column'}>
               <Text fontSize={'3xl'} as='b'>Request a ride now</Text>
               <Box py={8}>
-                <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
-                  <InputLeftElement pointerEvents='none' children={<TbLocationFilled color='gray.300' />} />
-                  <Input variant='filled' background={'#F6F6F6'} placeholder='Enter Pickup Location' onChange={(e) => {setPickupLoc(e.target.value);}} />
-                </InputGroup>
-                <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
-                  <InputLeftElement pointerEvents='none' children={<HiLocationMarker color='gray.300' />} />
-                  <Input variant='filled' background={'#F6F6F6'} placeholder='Enter Destination' onChange={(e) => {setDestinationLoc(e.target.value);}} />
-                </InputGroup>
+                {/* Auto Complete Google Maps */}
+                <Autocomplete onPlaceChanged={() => {destinationInputRef.current.value != '' && console.log('Calculating Route'); calculateRoute();}}>
+                  <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
+                    <InputLeftElement pointerEvents='none' children={<TbLocationFilled color='gray.300' />} />
+                    <Input ref={originInputRef} variant='filled' background={'#F6F6F6'} placeholder='Enter Pickup Location' onChange={(e) => {setPickupLoc(e.target.value);}} />
+                  </InputGroup>
+                </Autocomplete>
+                {/* Auto Complete Google Maps */}
+                <Autocomplete onPlaceChanged={() => {originInputRef.current.value != '' && console.log('Calculating Route'); calculateRoute();}}>
+                  <InputGroup position={'relative'} size={'lg'} my={2} border={'none'}>
+                    <InputLeftElement pointerEvents='none' children={<HiLocationMarker color='gray.300' />} />
+                    <Input ref={destinationInputRef} variant='filled' background={'#F6F6F6'} placeholder='Enter Destination' onChange={(e) => {setDestinationLoc(e.target.value);}} />
+                  </InputGroup>
+                </Autocomplete>
               </Box>
-              <VStack spacing={2}>
-                <Button width={'full'} variant='primary' onClick={BookRide}>Request now</Button>
+              <VStack spacing={2} mb={2}>
+                <Button isLoading={isCalculatingRoute} loadingText='Calculating Route...' spinnerPlacement='end' width={'full'} variant='primary' onClick={() => BookRide(originInputRef.current.value, destinationInputRef.current.value)}>Request now (Distance: {distance} Time: {duration})</Button>
                 <Button width={'full'} variant='secondary'>Schedule for later</Button>
-                <Button size={'sm'} rounded='full' variant='primary' _hover={{ bg: "whiteAlpha.400" }} onClick={() => router.replace('/map')}>Test Our Map</Button>
+                {/* {distance != '' && <Button size={'sm'} rounded='full' variant='primary'>Distance: {distance} Time: {duration}</Button>} */}
               </VStack>
+
+              <Box position={'relative'} left={0} top={0} h={'240px'} w={'100%'} overflow={'hidden'} rounded={'lg'}>
+                <Box position={'absolute'} left={0} top={0} h={'100%'} w={'100%'}>
+                  <GoogleMap center={center} zoom={17} mapContainerStyle={{width: '100%', height: '100%'}} options={mapOptions}>
+                    {/* <Marker position={center} /> */}
+                    {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
+                  </GoogleMap>
+                </Box>
+              </Box>
             </Flex>
           </TabPanel>
           <TabPanel>
