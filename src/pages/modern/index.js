@@ -1,4 +1,4 @@
-import { chakra, Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Text, Center, Box, Input, Button, Stack, VStack, HStack, InputGroup, InputLeftElement } from '@chakra-ui/react'
+import { chakra, Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Text, Center, Box, Input, Button, Stack, VStack, HStack, InputGroup, InputLeftElement, Avatar, AspectRatio } from '@chakra-ui/react'
 import { useToast } from '@chakra-ui/react'
 import { AiFillCar } from 'react-icons/ai'
 import { FiPackage } from 'react-icons/fi'
@@ -10,6 +10,9 @@ import { RiTruckFill } from 'react-icons/ri'
 import { FaTruckLoading } from 'react-icons/fa'
 import { TbTruckLoading } from 'react-icons/tb'
 
+import { GrStatusCriticalSmall } from 'react-icons/gr'
+import { CgShapeCircle } from 'react-icons/cg'
+
 import { FiMenu } from 'react-icons/fi'
 
 import { Toast } from "../../../components/Toast"
@@ -19,6 +22,9 @@ import { useAuth } from '../../../contexts/AuthContext'
 import { useRouter } from 'next/router'
 
 import { OnBoarding } from '../../../components/OnBoarding'
+
+import { Inter } from 'next/font/google'
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const toast = useToast()
@@ -76,8 +82,32 @@ export default function Home() {
           <FiMenu fontSize={24} />
         </Flex>
         <Center w={'full'}>
-          <Text>Good afternoon, Raghav</Text>
+          <Text className={inter.className} fontWeight='500'>Good afternoon, Raghav</Text>
         </Center>
+      </Flex>
+      <Flex py={6} px={4} direction={'column'} bg={'#03050C'} color={'#F4F4F5'} gap={5}>
+        <Flex>
+          <Flex h={14} w={14} justifyContent={'center'} alignItems={'center'}>
+            <GrStatusCriticalSmall fontSize={24} />
+          </Flex>
+          <Box className={inter.className} ml='3' alignSelf={'center'}>
+            <Text fontSize='sm'>Vehicle status</Text>
+            <Text fontWeight='semibold'>Avaliable</Text>
+          </Box>
+        </Flex>
+        <Flex>
+          <Flex h={14} w={14} justifyContent={'center'} alignItems={'center'}>
+            <CgShapeCircle fontSize={28} />
+          </Flex>
+          <Box className={inter.className} ml='3' alignSelf={'center'}>
+            <Text fontSize='sm'>Your next reward</Text>
+            <Text fontWeight='semibold'>2 Rides Away</Text>
+          </Box>
+        </Flex>
+      </Flex>
+      <Flex direction={'column'} p={7} bg={'#03050C'} color={'#F4F4F5'}>
+        <Text>Pickup Location</Text>
+        <Text fontSize='lg'>101 National Dr. San Bruno, CA 94580</Text>
       </Flex>
       {/* <Box>
         <Tabs onChange={(index) => TabChange(index)} defaultIndex={0}>
