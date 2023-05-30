@@ -110,8 +110,15 @@ export default function Home() {
     destinationInputRef.current.value = ''
   }
 
+  const getRandomOnlineDriver = async () => {
+    const { data, error } = await supabase.from('online_driver').select('*')
+    return data
+  }
+
   const registerRide = async (startLoc, endLoc) => {
-    const { data, error } = await supabase.from('rides').insert({pickup_loc: startLoc, drop_loc: endLoc, fare: 10, driver_id: '25f3e46e-46d7-47dc-bebf-8ec12d2a4886'}).select().maybeSingle()
+    const d = await getRandomOnlineDriver()
+    const mydriver = d[0]
+    const { data, error } = await supabase.from('rides').insert({pickup_loc: startLoc, drop_loc: endLoc, fare: 10, driver_id: mydriver.id}).select().maybeSingle()
     return data
   }
 
