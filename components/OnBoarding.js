@@ -2,10 +2,8 @@ import React from 'react'
 import { Box, Button, Center, Container, Flex, Heading, Text } from '@chakra-ui/react'
 import { FaBolt } from 'react-icons/fa'
 import { HiArrowRight } from 'react-icons/hi'
-import { useAuth } from '../contexts/AuthContext'
 
 export const OnBoarding = (props) => {
-  const { currentUser } = useAuth()
   return (
     <Container maxW='container.lg' h={'80vh'} justifyContent={'space-between'} centerContent>
       <Flex alignItems={'center'} flexGrow={1} flexShrink={1} flexBasis={'auto'}>
