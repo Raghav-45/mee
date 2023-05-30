@@ -54,6 +54,16 @@ export default function Home() {
   const destinationInputRef = useRef()
   const [isCalculatingRoute, setIsCalculatingRoute] = useState(false)
 
+  const showLoginAlert = () => {
+    toast({
+      title: 'Warning!',
+      description: "Please Login First to Ride",
+      status: 'warning',
+      duration: 3000,
+      isClosable: true,
+    })
+  }
+
   function TabChange(index) {
     index == 0 && toast({
       title: 'Excited!',
@@ -122,7 +132,6 @@ export default function Home() {
   }
 
   return (
-    // showOnBoarding ? <OnBoarding onTrynow={() => setShowOnBoarding(false)} />
     showOnBoarding ? <OnBoarding onTrynow={() => {setShowOnBoarding(false); !currentUser && router.replace('/register');}} />
     :
     <Box>
@@ -174,7 +183,7 @@ export default function Home() {
                 </Autocomplete>
               </Box>
               <VStack spacing={2} mb={2}>
-                <Button isLoading={isCalculatingRoute} loadingText='Calculating Route...' spinnerPlacement='end' width={'full'} variant='primary' onClick={() => BookRide(originInputRef.current.value, destinationInputRef.current.value)}>Request now (Distance: {distance} Time: {duration})</Button>
+                <Button isLoading={isCalculatingRoute} loadingText='Calculating Route...' spinnerPlacement='end' width={'full'} variant='primary' onClick={() => !currentUser ? showLoginAlert() : BookRide(originInputRef.current.value, destinationInputRef.current.value)}>Request now (Distance: {distance} Time: {duration})</Button>                
                 <Button width={'full'} variant='secondary'>Schedule for later</Button>
                 {/* {distance != '' && <Button size={'sm'} rounded='full' variant='primary'>Distance: {distance} Time: {duration}</Button>} */}
               </VStack>
