@@ -35,7 +35,15 @@ export default function Home() {
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
 
-  const [showOnBoarding, setShowOnBoarding] = useState(true)
+  const [showOnBoarding, setShowOnBoarding] = useState(false)
+
+  useEffect(() => {
+    if (currentUser == null) {
+      setShowOnBoarding(true)
+    } else {
+      setShowOnBoarding(false)
+    }
+  }, [currentUser])
 
   const [pickupLoc, setPickupLoc] = useState('')
   const [destinationLoc, setDestinationLoc] = useState('')
@@ -114,7 +122,8 @@ export default function Home() {
   }
 
   return (
-    showOnBoarding ? <OnBoarding onTrynow={() => setShowOnBoarding(false)} />
+    // showOnBoarding ? <OnBoarding onTrynow={() => setShowOnBoarding(false)} />
+    showOnBoarding ? <OnBoarding onTrynow={() => {setShowOnBoarding(false); !currentUser && router.replace('/register');}} />
     :
     <Box>
       <Tabs onChange={(index) => TabChange(index)} defaultIndex={0}>
