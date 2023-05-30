@@ -119,9 +119,9 @@ export default function Home() {
     registerRide(startLoc, endLoc).then((e) => setMyRide(e))
   }
 
-  useEffect(() => {
-    TabChange(0)
-  }, [])
+  // useEffect(() => {
+  //   TabChange(0)
+  // }, [])
 
   useEffect(() => {
     myRide && console.log('Got ride', myRide)
