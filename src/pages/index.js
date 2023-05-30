@@ -118,7 +118,7 @@ export default function Home() {
   const registerRide = async (startLoc, endLoc) => {
     const d = await getRandomOnlineDriver()
     const mydriver = d[0]
-    const { data, error } = await supabase.from('rides').insert({pickup_loc: startLoc, drop_loc: endLoc, fare: 10, driver_id: mydriver.id}).select().maybeSingle()
+    const { data, error } = await supabase.from('waiting_rides').insert({pickup_loc: startLoc, drop_loc: endLoc, fare: 10, driver_id: mydriver.id}).select().maybeSingle()
     return data
   }
 
