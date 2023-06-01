@@ -1,4 +1,4 @@
-import { chakra, Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Text, Center, Box, Input, Button, Stack, VStack, HStack, InputGroup, InputLeftElement } from '@chakra-ui/react'
+import { chakra, Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Text, Center, Box, Input, Button, Stack, VStack, HStack, InputGroup, InputLeftElement, Spinner, Container } from '@chakra-ui/react'
 import { useToast } from '@chakra-ui/react'
 import { AiFillCar } from 'react-icons/ai'
 import { FiPackage } from 'react-icons/fi'
@@ -131,7 +131,20 @@ export default function Home() {
   // }, [])
 
   useEffect(() => {
-    myRide && console.log('Got ride', myRide)
+    const sub = supabase.channel('any')
+      .on('postgres_changes', myRide ? { event: 'UPDATE', schema: 'public', table: 'waiting_rides', filter: `id=eq.${myRide.id}` } : { event: 'INSERT', schema: 'public', table: 'waiting_rides' }, payload => {
+        console.log('Change received!', payload)
+        setMyRide(payload.new)
+
+        // if (payload.new.is_accepted != true) {
+        //   console.log('i can get this ride', payload)
+        // }
+
+        // watchForRealtimeChanges && setRideQueue(current => [...current, payload.new])
+      }).subscribe()
+    return () => {
+      supabase.removeChannel(sub)
+    }
   }, [myRide])
 
   if (!isLoaded) {
@@ -246,9 +259,28 @@ export default function Home() {
           </TabPanel>
         </TabPanels>
       </Tabs>
-      <chakra.pre p={4}>
+
+      {myRide && myRide.is_accepted != true && <Box p={4} textAlign={'center'} textColor={'blue.400'}>
+        <HStack display={'inline-flex'}>
+          <Spinner size={'sm'}></Spinner>
+          <Text>Searching for Driver</Text>
+        </HStack>
+      </Box>}
+
+      {myRide && myRide.is_accepted == true && <Box p={4} textColor={'blue.400'}>
+        <VStack>
+          <Text>Driver Alloted</Text>
+          <Container textColor={'gray.500'} maxW='container.xs' overflowX='auto' py={2}>
+            <chakra.pre maxW={'sm'} p={2}>
+              <pre>{JSON.stringify(myRide, null, 1)}</pre>
+            </chakra.pre>
+          </Container>
+        </VStack>
+      </Box>}
+
+      {/* <chakra.pre p={4}>
         {myRide && <pre>{JSON.stringify(myRide, null, 2)}</pre>}
-      </chakra.pre>
+      </chakra.pre> */}
     </Box>
   )
 }
