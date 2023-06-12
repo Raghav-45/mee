@@ -177,7 +177,7 @@ export default function Profilepage() {
         order_id: order.id,
         prefill: {
           email: currentUser && currentUser?.email,
-          // contact: +919315988300,
+          contact: currentUser && currentUser?.phone,
         },
         handler: (response) => {
           // alert(response)
