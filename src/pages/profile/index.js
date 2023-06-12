@@ -182,8 +182,8 @@ export default function Profilepage() {
         handler: (response) => {
           // alert(response)
           toast({
-            title: 'Payment Success',
-            // description: 'Payment Success',
+            // title: 'Payment Success',
+            description: 'Payment Success',
             status: 'success',
             duration: 3000,
             isClosable: true,
