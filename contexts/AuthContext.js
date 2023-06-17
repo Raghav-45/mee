@@ -15,6 +15,7 @@ export const useAuth = () => useContext(AuthContext)
 
 export default function AuthContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null)
+  const [myCurrentRide, setMyCurrentRide] = useState()
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -72,6 +73,8 @@ export default function AuthContextProvider({ children }) {
     logout,
     forgotPassword,
     resetPassword,
+    myCurrentRide,
+    setMyCurrentRide,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

@@ -21,7 +21,7 @@ import { OnBoarding } from '../../components/OnBoarding'
 
 export default function Home() {
   const toast = useToast()
-  const { currentUser } = useAuth()
+  const { currentUser, myCurrentRide, setMyCurrentRide } = useAuth()
   const router = useRouter()
 
   const { isLoaded } = useJsApiLoader({
@@ -124,12 +124,19 @@ export default function Home() {
   }
 
   const BookRide = async (startLoc, endLoc) => {
-    registerRide(startLoc, endLoc).then((e) => setMyRide(e))
+    registerRide(startLoc, endLoc).then((e) => {setMyRide(e); setMyCurrentRide(e)})
   }
 
   // useEffect(() => {
   //   TabChange(0)
   // }, [])
+
+  useEffect(() => {
+    if (myRide && myRide.is_accepted == true) {
+      router.replace('/myride')
+    }
+  }, [myRide])
+  
 
   useEffect(() => {
     const sub = supabase.channel('any')
@@ -209,7 +216,7 @@ export default function Home() {
                 {/* {distance != '' && <Button size={'sm'} rounded='full' variant='primary'>Distance: {distance} Time: {duration}</Button>} */}
               </VStack>
 
-              <Box position={'relative'} left={0} top={0} h={'240px'} w={'100%'} overflow={'hidden'} rounded={'lg'}>
+              <Box position={'relative'} left={0} top={0} h={'240px'} w={'100%'} overflow={'hidden'} rounded={'xl'}>
                 <Box position={'absolute'} left={0} top={0} h={'100%'} w={'100%'}>
                   <GoogleMap center={center} zoom={17} mapContainerStyle={{width: '100%', height: '100%'}} options={mapOptions}>
                     {/* <Marker position={center} /> */}
